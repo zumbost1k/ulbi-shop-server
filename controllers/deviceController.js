@@ -66,7 +66,7 @@ class DeviceController {
       }
       return res.json(devices);
     } catch (error) {
-      res.status(404).json({ message: 'get all devices error' });
+      return res.status(404).json({ message: 'get all devices error' });
     }
   }
   async getOne(req, res) {
@@ -78,7 +78,7 @@ class DeviceController {
       });
       return res.json(device);
     } catch (error) {
-      res.status(404).json({ message: 'undefined id' });
+      return res.status(404).json({ message: 'undefined id' });
     }
   }
 }

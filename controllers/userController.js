@@ -16,14 +16,14 @@ class UserController {
       const errors = validationResult(req);
       //if errors not empty return error
       if (!errors.isEmpty()) {
-        res.status(400).json({ message: 'Registration error' });
+        return res.status(400).json({ message: 'Registration error' });
       }
       const { email, password, role } = req.body;
 
       const candidat = await User.findOne({ where: { email } });
 
       if (candidat) {
-        res.status(400).json({ message: 'this email already in used' });
+        return res.status(400).json({ message: 'this email already in used' });
       }
       const hashPassword = await bcrypt.hash(password, 7);
       const user = await User.create({ email, role, password: hashPassword });
@@ -31,7 +31,7 @@ class UserController {
       const userJwt = generateJWT(user.id, user.email, user.role);
       return res.json({ userJwt });
     } catch (error) {
-      res.status(404).json({ message: 'registration error' });
+      return res.status(404).json({ message: 'registration error' });
     }
   }
   async login(req, res) {
@@ -39,16 +39,16 @@ class UserController {
       const { email, password } = req.body;
       const user = await User.findOne({ where: { email } });
       if (!user) {
-        res.status(404).json({ message: 'invalid email' });
+        return res.status(404).json({ message: 'invalid email' });
       }
       let comparePassword = bcrypt.compareSync(password, user.password);
       if (!comparePassword) {
-        res.status(404).json({ message: 'invalid password' });
+        return res.status(404).json({ message: 'invalid password' });
       }
       const token = generateJWT(user.id, email, user.role);
       res.json({ token });
     } catch (error) {
-      res.status(404).json({ message: 'login error' });
+      return res.status(404).json({ message: 'login error' });
     }
   }
   async check(req, res, next) {

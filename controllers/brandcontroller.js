@@ -8,7 +8,7 @@ class BrandController {
       //return in
       return res.json(brand);
     } catch (error) {
-      res.status(404).json({ message: 'create brand error' });
+      return res.status(404).json({ message: 'create brand error' });
     }
   }
   async getAll(req, res) {
@@ -18,7 +18,7 @@ class BrandController {
       //return brands with the res
       return res.json(brands);
     } catch (error) {
-      res.status(404).json({ message: 'get all brends error' });
+      return res.status(404).json({ message: 'get all brends error' });
     }
   }
 }

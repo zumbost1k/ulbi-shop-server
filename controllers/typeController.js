@@ -9,17 +9,17 @@ class TypeController {
       //return in
       return res.json(type);
     } catch (error) {
-      res.status(404).json({ message: 'type create error' });
+      return res.status(404).json({ message: 'type create error' });
     }
   }
   async getAll(req, res) {
     try {
       //get all types from bd
-      const types = await Type.findAll()
+      const types = await Type.findAll();
       //return types with the res
-      return res.json(types)
+      return res.json(types);
     } catch (error) {
-      res.status(404).json({ message: 'type gel all error' });
+      return res.status(404).json({ message: 'type gel all error' });
     }
   }
 }
