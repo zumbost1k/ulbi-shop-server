@@ -5,6 +5,7 @@ class BasketDeviceController {
   async create(req, res) {
     try {
       let { deviceId } = req.body;
+
       const token = req.headers.authorization.split(' ')[1]; //Bearer fasfasfsdg
       if (!token) {
         return res.status(401).json({ message: 'user nonauthorized' });
@@ -16,6 +17,14 @@ class BasketDeviceController {
       });
       if (!currentUserBasket) {
         return res.status(401).json({ message: 'user nonauthorized' });
+      }
+      const candidatDevice = await BasketDevice.findOne({
+        where: { basketId: currentUserBasket.id, deviceId },
+      });
+      if (candidatDevice) {
+        return res
+          .status(401)
+          .json({ message: 'this device already in basket' });
       }
       const newBasketDevice = await BasketDevice.create({
         deviceId,
