@@ -45,16 +45,16 @@ class BasketDeviceController {
       }
       //decode it
       const decoded = jwt.verify(token, process.env.SECRET_KEY);
-      //find a busket id with userId from decoded variable
+      //find a basket id with userId from decoded variable
       const currentUserBasket = await Basket.findOne({
         where: { userId: decoded.id },
       });
       //find all devices from BasketDevice with currentUserBasket.id
-      const devicesInBusket = await BasketDevice.findAll({
+      const devicesInBasket = await BasketDevice.findAll({
         where: { basketId: currentUserBasket.id },
       });
-      //take only an id from devicesInBusket
-      const deviceIds = devicesInBusket.map((item) => item.deviceId);
+      //take only an id from devicesInBasket
+      const deviceIds = devicesInBasket.map((item) => item.deviceId);
       //find all devices in device by id in device table
       const devices = await Device.findAll({
         where: {
