@@ -7,6 +7,7 @@ class BasketDeviceController {
       let { deviceId } = req.body;
 
       const token = req.headers.authorization.split(' ')[1]; //Bearer fasfasfsdg
+
       if (!token) {
         return res.status(401).json({ message: 'user nonauthorized' });
       }
@@ -16,7 +17,7 @@ class BasketDeviceController {
         where: { userId: decoded.id },
       });
       if (!currentUserBasket) {
-        return res.status(401).json({ message: 'user nonauthorized' });
+        return res.status(401).json({ message: 'user havent basket' });
       }
       const candidatDevice = await BasketDevice.findOne({
         where: { basketId: currentUserBasket.id, deviceId },
